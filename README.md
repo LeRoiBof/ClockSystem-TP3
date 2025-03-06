@@ -1,8 +1,7 @@
 # ClockSystem
 
 [![]([https://img.shields.io/github/v/release/tommens/calculator-cucumber?label=Latest%20Release](https://github.com/LeRoiBof/ClockSystem-TP3/actions/workflows/WF-FILE.yml/badge.svg
-))]([https://github.com/tommens/calculator-cucumber/releases/latest](https://github.com/LeRoiBof/ClockSystem-TP3/actions/workflows/WF-FILE.yml/badge.svg
-))
+))]
 
 This is a gradle-based Java project for a Clock with Swing GUI and JUnit5 unit tests. It has been created and used by Tom Mens for educational purposes at the University of Mons.
 
