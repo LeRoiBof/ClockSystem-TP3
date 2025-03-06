@@ -1,0 +1,40 @@
+name: OpenSSF Scorecard Analysis
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  id-token: write # Requis pour l'authentification OpenSSF Scorecard
+  contents: read  # Permet d’accéder au code source
+  security-events: write # Nécessaire pour uploader les résultats SARIF
+
+jobs:
+  scorecard:
+    name: Run OpenSSF Scorecard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@v2.4.1
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          publish_results: true
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5 # Conserver l'artefact pendant 5 jours
+
+      - name: Upload SARIF results to code scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
