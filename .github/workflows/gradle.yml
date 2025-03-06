@@ -7,6 +7,9 @@
 
 name: Java CI with Gradle
 
+env:
+  DISPLAY: ":99.0" # Set a display for Xvfb
+
 on:
   push:
     branches: [ "main" ]
@@ -19,12 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    env:
-      DISPLAY: ":99.0" # Set a display for Xvfb
-    services:
-      xvfb:
-        image: selenium/standalone-chrome:latest
-        options: -e VNC_SERVER=true -e VNC_PORT=5900
 
     steps:
     - uses: actions/checkout@v4
@@ -44,6 +41,9 @@ jobs:
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
+
+    - name: Start Xvfb
+      run: Xvfb $DISPLAY -ac -screen 0 1600x1200x24 > /dev/null 2>&1 &
     
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4.3.0
